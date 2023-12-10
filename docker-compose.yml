@@ -1,0 +1,50 @@
+version: '3.5'
+
+services:
+  app:
+    image: thomasilliet/excalidraw-front-unprivileged:v0.17.0
+    build:
+      context: ./build/app
+      args:
+        - EXCALIDRAW_REV=v0.17.0
+      x-bake:
+        tags:
+          - thomasilliet/excalidraw-front-unprivileged:v0.17.0
+          - thomasilliet/excalidraw-front-unprivileged:latest
+          - ghcr.io/thomasilliet/docker-excalidraw:v0.17.0
+          - ghcr.io/thomasilliet/docker-excalidraw:latest
+        platforms:
+          - linux/amd64
+          - linux/arm64
+          - linux/arm/v7
+        pull: true
+    restart: unless-stopped
+    ports:
+      - "8001:8080"
+    environment:
+      - TZ=Asia/Tokyo
+      - VITE_APP_WS_SERVER_URL=http://localhost:8002/
+
+  collabo:
+    image: thomasilliet/excalidraw-room-unprivileged:v2023.05.27
+    build:
+      context: ./build/room
+      args:
+        - EXCALIDRAW_ROOM_REV=49bf529ea1f9448f1a6f77ae051092585162e132
+      x-bake:
+        tags:
+          - thomasilliet/excalidraw-room-unprivileged:v2023.05.27
+          - thomasilliet/excalidraw-room-unprivileged:latest
+          - ghcr.io/thomasilliet/docker-excalidraw-room:v2023.05.27
+          - ghcr.io/thomasilliet/docker-excalidraw-room:latest
+        platforms:
+          - linux/amd64
+          - linux/arm64
+          - linux/arm/v7
+        pull: true
+    restart: unless-stopped
+    ports:
+      - "8002:8080"
+    environment:
+      - TZ=Asia/Tokyo
+      - PORT=8080 
