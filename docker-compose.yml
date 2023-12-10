@@ -11,8 +11,8 @@ services:
         tags:
           - thomasilliet/excalidraw-front-unprivileged:v0.17.0
           - thomasilliet/excalidraw-front-unprivileged:latest
-          - ghcr.io/thomasilliet/docker-excalidraw:v0.17.0
-          - ghcr.io/thomasilliet/docker-excalidraw:latest
+          - ghcr.io/thomas-illiet/docker-excalidraw:v0.17.0
+          - ghcr.io/thomas-illiet/docker-excalidraw:latest
         platforms:
           - linux/amd64
           - linux/arm64
@@ -35,8 +35,8 @@ services:
         tags:
           - thomasilliet/excalidraw-room-unprivileged:v2023.05.27
           - thomasilliet/excalidraw-room-unprivileged:latest
-          - ghcr.io/thomasilliet/docker-excalidraw-room:v2023.05.27
-          - ghcr.io/thomasilliet/docker-excalidraw-room:latest
+          - ghcr.io/thomas-illiet/docker-excalidraw-room:v2023.05.27
+          - ghcr.io/thomas-illiet/docker-excalidraw-room:latest
         platforms:
           - linux/amd64
           - linux/arm64
