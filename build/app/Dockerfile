@@ -30,8 +30,10 @@ RUN cp -R /work/repo/src/              .
 RUN cp -R /work/repo/scripts/          .
 RUN cp -R /work/repo/excalidraw-app/   .
 
+RUN sed -i    's/dddice.com/*/g'                                                                                          ./src/element/embeddable.ts
 RUN sed -i -E 's|^(\s*"excalidraw\.production\.min"\s*:\s*)"\./entry\.js"|\1"../src/excalidraw-app/index.js"|'            ./src/packages/excalidraw/webpack.prod.config.js
 RUN sed -i -E 's|^\s*VITE_APP_WS_SERVER_URL\s*=.*$|VITE_APP_WS_SERVER_URL=https://dummy-collaboration-server.example|'    ./.env.production
+
 RUN yarn build:app:docker
 
 FROM nginxinc/nginx-unprivileged:1.25.3-alpine-slim
