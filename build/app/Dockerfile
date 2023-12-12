@@ -32,8 +32,8 @@ RUN cp -R /work/repo/excalidraw-app/   .
 
 # Set base path of the product
 ENV VITE_APP_BASEPATH=/
-RUN sed -i "/export default defineConfig({/a   base: envVars.VITE_APP_BASEPATH," vite.config.ts
-RUN sed -i "/socketIOClient(socketServerData.url, {/a   path: envVars.VITE_COLLAB_BASEPATH," excalidraw-app/collab/Collab.tsx 
+RUN sed -i "/export default defineConfig({/a   base: '/excalidraw/'," vite.config.ts
+RUN sed -i "/socketIOClient(socketServerData.url, {/a   path: 'excalidrawcollab/socket.io/'," excalidraw-app/collab/Collab.tsx 
 
 # Allow the use of any host name
 RUN sed -i    's/const validateHostname/validateHostnameOld/g' ./src/element/embeddable.ts
