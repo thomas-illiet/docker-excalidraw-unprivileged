@@ -30,7 +30,15 @@ RUN cp -R /work/repo/src/              .
 RUN cp -R /work/repo/scripts/          .
 RUN cp -R /work/repo/excalidraw-app/   .
 
-RUN sed -i    's/dddice.com/*/g'                                                                                          ./src/element/embeddable.ts
+# Set base path of the product
+ENV VITE_APP_BASEPATH=/
+RUN sed -i "/export default defineConfig({/a   base: envVars.VITE_APP_BASEPATH," vite.config.ts
+RUN sed -i "/socketIOClient(socketServerData.url, {/a   path: envVars.VITE_COLLAB_BASEPATH," excalidraw-app/collab/Collab.tsx 
+
+# Allow the use of any host name
+RUN sed -i    's/const validateHostname/validateHostnameOld/g' ./src/element/embeddable.ts
+RUN echo "validateHostname = (url: string, allowedHostnames: Set<string> | string,): boolean => { return true; };" >> ./src/element/embeddable.ts
+
 RUN sed -i -E 's|^(\s*"excalidraw\.production\.min"\s*:\s*)"\./entry\.js"|\1"../src/excalidraw-app/index.js"|'            ./src/packages/excalidraw/webpack.prod.config.js
 RUN sed -i -E 's|^\s*VITE_APP_WS_SERVER_URL\s*=.*$|VITE_APP_WS_SERVER_URL=https://dummy-collaboration-server.example|'    ./.env.production
 
