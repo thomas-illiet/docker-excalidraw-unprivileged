@@ -33,11 +33,9 @@ RUN cp -R /work/repo/excalidraw-app/   .
 # Set base path of the product
 ENV VITE_APP_BASEPATH=/
 RUN sed -i "/export default defineConfig({/a   base: '/excalidraw/'," vite.config.ts
-RUN sed -i "/socketIOClient(socketServerData.url, {/a   path: 'excalidrawcollab/socket.io/'," excalidraw-app/collab/Collab.tsx 
 
 # Allow the use of any host name
-RUN sed -i    's/const validateHostname/validateHostnameOld/g' ./src/element/embeddable.ts
-RUN echo "validateHostname = (url: string, allowedHostnames: Set<string> | string,): boolean => { return true; };" >> ./src/element/embeddable.ts
+RUN sed -i 's/const { hostname } = new URL(url);/ return true;/g' ./src/element/embeddable.ts
 
 RUN sed -i -E 's|^(\s*"excalidraw\.production\.min"\s*:\s*)"\./entry\.js"|\1"../src/excalidraw-app/index.js"|'            ./src/packages/excalidraw/webpack.prod.config.js
 RUN sed -i -E 's|^\s*VITE_APP_WS_SERVER_URL\s*=.*$|VITE_APP_WS_SERVER_URL=https://dummy-collaboration-server.example|'    ./.env.production
